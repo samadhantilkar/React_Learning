@@ -3,10 +3,17 @@
     flex-wrap: wrap;
     gap: 2rem;
 }
-.project-section > h2{
+section > h2{
     font-weight: 300;
     font-size: 2rem;
+
 }
-.project-section{
+section{
     margin-top: 4rem;
+}
+
+.techstach-container{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
 }
