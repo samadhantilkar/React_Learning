@@ -1,4 +1,4 @@
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
 
 function IntroForm(){
 
@@ -7,7 +7,7 @@ function IntroForm(){
         lastName:"Tilkar",
         email:"samadhantilkar@gmail.com",
         password:"1234",
-        gender:"female",
+        gender:"male",
         country:"india",
         hobbies:['sport','cooking','reading']
     };
@@ -32,12 +32,49 @@ function IntroForm(){
     }
 
     function handleInputUpdate(e){
-        const {name,value}=e.target;
-        console.log(name,":",value);
+        // const {name,value}=e.target;
+        // console.log(name,":",value);
+
+        const {name,value,type,checked}=e.target;
+
+        if(type==='checkbox'){
+            console.log(type,name,value,checked);
+            const newHobbies=checked?[...data.hobbies,value]:
+            data.hobbies.filter((item)=>item!==value);
+
+            const newData={...data,hobbies:newHobbies};
+            setData(newData);
+            console.log(newData);
+            return;
+        }
+        // console.log(name,":",value);
+        const newData={...data,[name]:value};
+        console.log(newData);
+        setData(newData);
+    }
+
+    const emptyState={
+        firstName:"",
+        lastName:"",
+        email:"",
+        password:"",
+        gender:"",
+        hobbies:[],
+        country:""
+    }
+
+    const [data,setData]=useState(emptyState);
+
+    function onformSubmit(e){
+        e.preventDefault();
+        console.log(data);
+        //call backend and send the data there...
+
+        setData(emptyState)
     }
 
     return (
-        <form action={action} noValidate>
+        <form onSubmit={onformSubmit} noValidate>
             <label htmlFor="name">
                 First Name
             </label>
@@ -46,23 +83,42 @@ function IntroForm(){
                 name="firstName" 
                 type="text" 
                 placeholder="e.g Samadhan" 
-                defaultValue={state.firstName} 
+                value={data?.firstName}
+                // defaultValue={state.firstName} 
                 onChange={handleInputUpdate}/>
             <br />
             <label>
                 Last Name
-                <input type="text" name="lastName" placeholder="e.g Tilkar" defaultValue={state.lastName} />
+                <input type="text" 
+                name="lastName" 
+                placeholder="e.g Tilkar" 
+                value={data?.lastName}
+                onChange={handleInputUpdate}
+                // defaultValue={state.lastName} 
+                />
             </label>
 
-            <div><label>
-                Email
-                <input type="email"  defaultValue={state.email} readOnly name="email" placeholder="e.g tilkarsamadhan@gmail.com"  />
-            </label></div>
+            <div>
+                <label>
+                    Email
+                    <input type="email"  
+                    // defaultValue={state.email} 
+                    // readOnly 
+                    name="email" 
+                    value={data?.email}
+                    onChange={handleInputUpdate}
+                    placeholder="e.g tilkarsamadhan@gmail.com"  />
+                </label>
+            </div>
 
             <div>
                 <label>
                     Password:
-                    <input  name="password" type="password" placeholder="Password" />
+                    <input  name="password" 
+                            type="password"
+                            value={data.password} 
+                            onChange={handleInputUpdate}
+                            placeholder="Password" />
                 </label>
             </div>
 
@@ -71,15 +127,27 @@ function IntroForm(){
                 <label>
                     Gender
                     <label>
-                        <input type="radio" name="gender" value="male" defaultChecked={"male"===state.gender}/>
+                        <input type="radio" name="gender" value="male"  
+                        checked={"male"===data.gender} 
+                        onChange={handleInputUpdate}
+                        // defaultChecked={"male"===state.gender}
+                        />
                         Male
                     </label>
                     <label>
-                        <input type="radio" name="gender" value="female" defaultChecked={"female"===state.gender}/>
+                        <input type="radio" name="gender" value="female" 
+                        checked={"female"===data.gender}
+                        onChange={handleInputUpdate}
+                        // defaultChecked={"female"===state.gender}
+                        />
                         Female
                     </label>
                     <label>
-                        <input type="radio" name="gender" value="other" defaultChecked={"other"===state.gender}/>
+                        <input type="radio" name="gender" value="other" 
+                        checked={"other"===data.gender}
+                        onChange={handleInputUpdate}
+                        // defaultChecked={"other"===data.gender}
+                        />
                         Other
                     </label>
                 </label>
@@ -89,7 +157,7 @@ function IntroForm(){
             <div>
                 <label>
                     Country:
-                    <select name="country" defaultValue={state.country}>
+                    <select name="country" value={data.country} onChange={handleInputUpdate}>
                         <option value="" >Choose a Country</option>
                         <option value="india" >India</option>
                         <option value="usa" >USA</option>
@@ -103,16 +171,28 @@ function IntroForm(){
                 <label>
                     Hobbies
                     <label >
-                        <input type="checkbox" name="hobbies" id="" value="sport" defaultChecked={state.hobbies?.includes("sport")}/>
+                        <input type="checkbox" name="hobbies" value="sport"
+                        // defaultChecked={state.hobbies?.includes("sport")}
+                        checked={data.hobbies.includes("sport")}
+                        onChange={handleInputUpdate}
+                         />
                         Sport
                     </label>
 
                     <label>
-                        <input type="checkbox" name="hobbies" id="" value="reading" defaultChecked={state.hobbies?.includes("reading")}/>
+                        <input type="checkbox" name="hobbies"  value="reading" 
+                        checked={data.hobbies.includes("reading")}
+                        onChange={handleInputUpdate}
+                        // defaultChecked={state.hobbies?.includes("reading")}
+                        />
                         Reading
                     </label>
                     <label>
-                        <input type="checkbox" name="hobbies" id="" value="cooking" defaultChecked={state.hobbies?.includes("cooking")}/>
+                        <input type="checkbox" name="hobbies"  value="cooking" 
+                        checked={data.hobbies.includes("cooking")}
+                        onChange={handleInputUpdate}
+                        // defaultChecked={state.hobbies?.includes("cooking")}
+                        />
                         Cooking
                     </label>
                 </label>
