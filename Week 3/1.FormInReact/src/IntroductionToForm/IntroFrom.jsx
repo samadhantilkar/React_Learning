@@ -1,9 +1,34 @@
+import { useActionState } from "react";
+
 function IntroForm(){
-    function formSubmitted(formData){
+
+    const initState={
+        firstName:"Samadhan",
+        lastName:"Tilkar",
+        email:"samadhantilkar@gmail.com",
+        password:"1234",
+        gender:"female",
+        country:"india",
+        hobbies:['sport','cooking','reading']
+    };
+
+    const [state,action,isPending]=useActionState(formSubmitted,initState);
+
+    async function formSubmitted(prevData,formData){
+        console.log(prevData,Object.fromEntries(formData))
+        console.log("Submitting....");
+
+
+        await new Promise((resolve)=>setTimeout(resolve,3000))
+
+
         let data=Object.fromEntries(formData);
         const allHobbies=formData.getAll("hobbies")
         data={...data,hobbies:allHobbies};
-        console.log(data);
+
+
+        console.log("Submited Successfully:",data);
+        return {};
     }
 
     function handleInputUpdate(e){
@@ -12,18 +37,26 @@ function IntroForm(){
     }
 
     return (
-        <form action={formSubmitted} noValidate>
-            <label htmlFor="name">First Name</label>
-            <input id="name" name="firstName" type="text" placeholder="e.g Samadhan" defaultValue={"Samadhan"} onChange={handleInputUpdate}/>
+        <form action={action} noValidate>
+            <label htmlFor="name">
+                First Name
+            </label>
+            <input 
+                id="name" 
+                name="firstName" 
+                type="text" 
+                placeholder="e.g Samadhan" 
+                defaultValue={state.firstName} 
+                onChange={handleInputUpdate}/>
             <br />
             <label>
                 Last Name
-                <input type="text" name="lastName" placeholder="e.g Tilkar" defaultValue="Tilkar" />
+                <input type="text" name="lastName" placeholder="e.g Tilkar" defaultValue={state.lastName} />
             </label>
 
             <div><label>
                 Email
-                <input type="email" readOnly name="email" placeholder="e.g tilkarsamadhan@gmail.com" defaultValue={"tilkarsamadhan"} />
+                <input type="email"  defaultValue={state.email} readOnly name="email" placeholder="e.g tilkarsamadhan@gmail.com"  />
             </label></div>
 
             <div>
@@ -38,15 +71,15 @@ function IntroForm(){
                 <label>
                     Gender
                     <label>
-                        <input type="radio" name="gender" value="male"/>
+                        <input type="radio" name="gender" value="male" defaultChecked={"male"===state.gender}/>
                         Male
                     </label>
                     <label>
-                        <input type="radio" name="gender" value="female"/>
+                        <input type="radio" name="gender" value="female" defaultChecked={"female"===state.gender}/>
                         Female
                     </label>
                     <label>
-                        <input type="radio" name="gender" value="other"/>
+                        <input type="radio" name="gender" value="other" defaultChecked={"other"===state.gender}/>
                         Other
                     </label>
                 </label>
@@ -56,11 +89,11 @@ function IntroForm(){
             <div>
                 <label>
                     Country:
-                    <select name="country">
+                    <select name="country" defaultValue={state.country}>
                         <option value="" >Choose a Country</option>
-                        <option value="india">India</option>
-                        <option value="usa">USA</option>
-                        <option value="canada">Canada</option>
+                        <option value="india" >India</option>
+                        <option value="usa" >USA</option>
+                        <option value="canada" >Canada</option>
                     </select>
                 </label>
             </div>
@@ -70,23 +103,23 @@ function IntroForm(){
                 <label>
                     Hobbies
                     <label >
-                        <input type="checkbox" name="hobbies" id="" value="sport"/>
+                        <input type="checkbox" name="hobbies" id="" value="sport" defaultChecked={state.hobbies?.includes("sport")}/>
                         Sport
                     </label>
 
                     <label>
-                        <input type="checkbox" name="hobbies" id="" value="reading"/>
+                        <input type="checkbox" name="hobbies" id="" value="reading" defaultChecked={state.hobbies?.includes("reading")}/>
                         Reading
                     </label>
                     <label>
-                        <input type="checkbox" name="hobbies" id="" value="cooking"/>
+                        <input type="checkbox" name="hobbies" id="" value="cooking" defaultChecked={state.hobbies?.includes("cooking")}/>
                         Cooking
                     </label>
                 </label>
             </div>
 
             <div>
-                <button type="submit">Submit</button>
+                <button disabled={isPending} type="submit">Submit</button>
                 <button type="button">Cancel</button>
             </div>
         </form>
