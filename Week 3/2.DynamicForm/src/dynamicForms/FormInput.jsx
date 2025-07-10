@@ -1,4 +1,4 @@
-function FormInput({id,label , options,type,name,value,onChange}){
+function FormInput({id,label,options,type,name,value,onChange,error}){
 
     const RadioComponent=type==='radio' && (
         <>
@@ -52,9 +52,12 @@ function FormInput({id,label , options,type,name,value,onChange}){
                             RadioComponent:
             type==='select'?    
                             selectComponent:
-            type="checkbox"?
+            type==="checkbox"?
                             CheckBoxComponent:
-            <input id={id} type={type} name={name} value={value} onChange={onChange} />}
+            <input id={id} type={type} name={name} value={value} onChange={onChange} />
+            }
+
+            {error && <p style={{color:"red"}}>{error}</p>}
             
         </div>
     )
