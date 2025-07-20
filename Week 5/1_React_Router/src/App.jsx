@@ -4,15 +4,20 @@ import Login from './layouts/login'
 import Users from './layouts/dashboard/users'
 import Products from './layouts/dashboard/products'
 import Dashboard from './layouts/dashboard/dashboard'
+import DashboardHome from './layouts/dashboard/dashboard-home'
+import Home from './home'
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='' element={<p> Home </p>}/>
+        <Route index
+        // path=''
+         element={<Home/>}/>
         <Route path='about' element={<p> About Paragraph</p>}/>
         <Route path='login' element={<Login/>}/>
         
         <Route path='dashboard' element={<Dashboard/>}> 
+          <Route index element={<DashboardHome/>}/>
           <Route path='users' element={<Users/>}/>
           <Route path='products' element={<Products/>} /> 
         </Route>
