@@ -1,5 +1,5 @@
 import { Link, Navigate, useNavigate } from "react-router";
-import Login from "./login";
+import Login from "./Login";
 
 function Home(){
 
