@@ -5,6 +5,7 @@ const AuthContext=createContext();
 function AuthProvider({children}){
 
     const [user,setUser]=useState(null);
+    const [loading,setLoading]=useState(true);
 
     useEffect(()=>{
         const token=localStorage.getItem("USER_TOKEN");
@@ -17,8 +18,11 @@ function AuthProvider({children}){
             }
             setUser(userObj);
         }
+        setLoading(false)
 
     },[]);
+
+    if(loading) return <p>Loading...</p>
 
     return <AuthContext.Provider value={{user,setUser}}>
         {children}
