@@ -8,12 +8,13 @@
 // const Dashboard=lazy(()=> import ( './Dashboard'))
 // const Products=lazy(()=>import('./Products'))
 // const ProductDetails=lazy(()=>import('./ProductsDetails'))
+import { ErrorBoundary } from 'react-error-boundary'
 import AppRouter from './routes'
+import ErrorPage from './error-page'
 function App() {
     
   return (
-
-    <AppRouter/>
+      <AppRouter/>
   //   <BrowserRouter>
   //       <Routes>
   //           <Route path=''  element={<Home/>} />

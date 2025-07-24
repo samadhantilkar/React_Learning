@@ -4,8 +4,9 @@ import Login from "./Login";
 import ProtectedRoutes from "./protected-routes";
 import About from "./About/About";
 import Dashboard from "./Dashboard";
-import Users from "./Users";
+// import Users from "./Users";
 import Products from "./Products";
+import ErrorPage from "./error-page.jsx";
 
 function AppRouter(){
 
@@ -26,12 +27,12 @@ function AppRouter(){
     // ])
 
     const router=createBrowserRouter(createRoutesFromElements(
-    <Route>
+    <Route errorElement={<ErrorPage/>}>
         <Route path=''  element={<Home/>} />
             <Route path='login' element={<Login/>}/>
 
             <Route element={<ProtectedRoutes/>}>
-               <Route index path='about' element={<About/>}/>
+               <Route path='about' element={<About/>}/>
                <Route path='dashboard' element={<Dashboard/>}>
                     <Route path='users' element={<Users/>}/>
                     <Route path='products' element={<Products/>}/>
