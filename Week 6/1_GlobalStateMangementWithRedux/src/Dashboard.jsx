@@ -6,6 +6,9 @@ function Dashboard(){
                 <Link className="link-button" to={"/counter"}>
                     Go To Counter
                 </Link>
+                <Link className="link-button" to={"/shopping"}>
+                    Go To Shopping
+                </Link>
             </div>
         
         </div>
